@@ -52,10 +52,12 @@ git pull origin main
 To add and commit changes to your repository, use the following commands: (to save your files and upload to GitHub)
 
 ```sh
-# The remote add origin command only need to perform once when upload files
+# The remote add origin and branch command only need to perform once when upload files
 ```
 ```sh
 git remote add origin https://github.com/GohTeckAn/NexRail.git
+git branch -M main
+
 git add .
 git commit -m "Your commit message"
 git push origin main
