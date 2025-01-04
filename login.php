@@ -42,7 +42,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 // Success - Start session
                 $_SESSION['user_id'] = $userId;
                 $_SESSION['email'] = $email;
-                header("Location: dashboard.php");
+                header("Location: index.php");
                 exit();
             } else {
                 $error = "Invalid email or password.";
