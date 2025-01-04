@@ -1,0 +1,100 @@
+-- Database: `railsys`
+CREATE DATABASE IF NOT EXISTS `railsys`;
+USE `railsys`;
+
+-- Table: admin
+CREATE TABLE IF NOT EXISTS `admin` (
+  `adminId` INT(11) NOT NULL AUTO_INCREMENT,
+  `permission` VARCHAR(255) NOT NULL,
+  `email` VARCHAR(255) NOT NULL UNIQUE,
+  `password` VARCHAR(255) NOT NULL,
+  PRIMARY KEY (`adminId`)
+);
+
+-- Table: notification
+CREATE TABLE IF NOT EXISTS `notification` (
+  `notificationId` INT(11) NOT NULL AUTO_INCREMENT,
+  `message` TEXT NOT NULL,
+  `timestamp` DATETIME NOT NULL,
+  `recipient` VARCHAR(255) NOT NULL,
+  PRIMARY KEY (`notificationId`)
+);
+
+-- Table: price
+CREATE TABLE IF NOT EXISTS `price` (
+  `baseFare` FLOAT NOT NULL,
+  `distanceFee` FLOAT NOT NULL
+);
+
+-- Table: trainschedule
+CREATE TABLE IF NOT EXISTS `trainschedule` (
+  `scheduleId` INT(11) NOT NULL AUTO_INCREMENT,
+  `tripNo` INT(11) NOT NULL,
+  `trainNo` VARCHAR(50) DEFAULT NULL,
+  `trainName` VARCHAR(50) DEFAULT NULL,
+  `stationName` VARCHAR(255) NOT NULL,
+  `arrivalTime` TIME DEFAULT NULL,
+  PRIMARY KEY (`scheduleId`)
+);
+
+-- Insert data for trainschedule
+INSERT INTO `trainschedule` (scheduleId, tripNo, trainType, stationName, arrivalTime) VALUES
+(1, 1, 'Komuter', 'TANJUNG MALIM', '05:40:00'),
+(2, 1, 'Komuter', 'KUALA KUBU BHARU', '05:53:00'),
+(3, 1, 'Komuter', 'RASA', '05:58:00'),
+(4, 1, 'Komuter', 'BATANG KALI', '06:02:00'),
+(5, 1, 'Komuter', 'SERENDAH', '06:10:00'),
+(6, 1, 'Komuter', 'RAWANG', '06:19:00'),
+(7, 1, 'Komuter', 'KUANG', '06:26:00'),
+(8, 1, 'Komuter', 'SUNGAI BULOH', '06:34:00'),
+(9, 1, 'Komuter', 'KEPONG SENTRAL', '06:41:00'),
+(10, 1, 'Komuter', 'KEPONG', '06:44:00'),
+(11, 1, 'Komuter', 'SEGAMBUT', '06:49:00'),
+(12, 1, 'Komuter', 'PUTRA', '06:54:00'),
+(13, 1, 'Komuter', 'BANK NEGARA', '06:57:00'),
+(14, 1, 'Komuter', 'KUALA LUMPUR', '07:01:00'),
+(15, 1, 'Komuter', 'KL SENTRAL', '07:06:00'),
+(16, 2, 'Komuter', 'TANJUNG MALIM', '00:00:00'),
+(17, 2, 'Komuter', 'KUALA KUBU BHARU', '00:00:00'),
+(18, 2, 'Komuter', 'RASA', '00:00:00'),
+(19, 2, 'Komuter', 'BATANG KALI', '00:00:00'),
+(20, 2, 'Komuter', 'SERENDAH', '00:00:00'),
+(21, 2, 'Komuter', 'RAWANG', '00:00:00'),
+(22, 2, 'Komuter', 'KUANG', '00:00:00'),
+(23, 2, 'Komuter', 'SUNGAI BULOH', '00:00:00'),
+(24, 2, 'Komuter', 'KEPONG SENTRAL', '00:00:00'),
+(25, 2, 'Komuter', 'KEPONG', '00:00:00'),
+(26, 2, 'Komuter', 'SEGAMBUT', '00:00:00'),
+(27, 2, 'Komuter', 'PUTRA', '00:00:00'),
+(28, 2, 'Komuter', 'BANK NEGARA', '00:00:00'),
+(29, 2, 'Komuter', 'KUALA LUMPUR', '00:00:00'),
+(30, 2, 'Komuter', 'KL SENTRAL', '00:00:00'),
+(31, 3, 'Komuter', 'TANJUNG MALIM', '00:00:00'),
+(32, 3, 'Komuter', 'KUALA KUBU BHARU', '00:00:00'),
+(33, 3, 'Komuter', 'RASA', '00:00:00'),
+(34, 3, 'Komuter', 'BATANG KALI', '00:00:00'),
+(35, 3, 'Komuter', 'SERENDAH', '00:00:00'),
+(36, 3, 'Komuter', 'RAWANG', '00:00:00'),
+(37, 3, 'Komuter', 'KUANG', '00:00:00'),
+(38, 3, 'Komuter', 'SUNGAI BULOH', '00:00:00'),
+(39, 3, 'Komuter', 'KEPONG SENTRAL', '00:00:00'),
+(40, 3, 'Komuter', 'KEPONG', '00:00:00'),
+(41, 3, 'Komuter', 'SEGAMBUT', '00:00:00'),
+(42, 3, 'Komuter', 'PUTRA', '00:00:00'),
+(43, 3, 'Komuter', 'BANK NEGARA', '00:00:00'),
+(44, 3, 'Komuter', 'KUALA LUMPUR', '00:00:00'),
+(45, 3, 'Komuter', 'KL SENTRAL', '00:00:00');
+
+-- Table: user
+CREATE TABLE IF NOT EXISTS `user` (
+  `userId` INT(255) NOT NULL AUTO_INCREMENT,
+  `userName` VARCHAR(255) NOT NULL,
+  `email` VARCHAR(255) NOT NULL,
+  `password` VARCHAR(100) NOT NULL,
+  `verification_code` VARCHAR(255) NOT NULL,
+  `is_verified` VARCHAR(50) NOT NULL,
+  PRIMARY KEY (`userId`)
+);
+
+-- Adjust AUTO_INCREMENT values
+ALTER TABLE trainschedule AUTO_INCREMENT = 46;

@@ -1,0 +1,231 @@
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-color: black;
+    color: white;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    border-bottom: 1px solid white;
+}
+
+.header .brand {
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.nav-links {
+    display: flex;
+    justify-content: flex-end;
+    flex-grow: 1;
+}
+
+.nav-links a, .nav-links span, .dropdown a, .dropdown span {
+    margin: 0 10px;
+    text-decoration: none;
+    color: white;
+    font-weight: bold;
+    padding: 10px 15px;
+    border-radius: 5px;
+    position: relative;
+    z-index: 1;
+    white-space: nowrap;
+}
+
+.nav-links a:hover, .dropdown a:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+}
+
+.nav-links .current-page, .dropdown .current-page {
+    color: #4CAF50;
+    cursor: default;
+}
+
+.hamburger {
+    display: none;
+    flex-direction: column;
+    cursor: pointer;
+}
+
+.hamburger div {
+    width: 25px;
+    height: 3px;
+    background-color: white;
+    margin: 4px 0;
+}
+
+.dropdown {
+    display: none;
+    flex-direction: column;
+    position: absolute;
+    top: 60px;
+    right: 20px;
+    background-color: black;
+    border: 1px solid white;
+    border-radius: 5px;
+    z-index: 2;
+}
+
+.footer {
+    text-align: center;
+    padding: 10px 0;
+    background-color: #333;
+    color: white;
+    margin-top: 20px;
+}
+
+.search-section {
+    margin: 20px 0;
+    padding: 20px;
+    background-color: #333;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+}
+
+#origin, #destination {
+    background-color: #222;
+    color: white;
+    border: 1px solid #4CAF50;
+    padding: 10px;
+    border-radius: 5px;
+    font-size: 16px;
+    width: 100%;
+}
+
+#origin:hover, #destination:hover {
+    background-color: #4CAF50;
+}
+
+.search-section form {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.search-section label {
+    font-weight: bold;
+    font-size: 16px;
+    color: white;
+    margin-bottom: 5px;
+}
+
+.search-section select, .search-section input {
+    background-color: #222;
+    color: white;
+    border: 1px solid #4CAF50;
+    padding: 10px;
+    border-radius: 5px;
+    width: 200px;
+    font-size: 16px;
+}
+
+.search-section select:focus, .search-section input:focus {
+    outline: none;
+    border-color: #4CAF50;
+}
+
+.search-section input[type="number"], .search-section input[type="date"], .search-section input[type="time"] {
+    width: 150px;
+}
+
+.search-section button[type="submit"] {
+    padding: 12px 25px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+}
+
+.search-section button[type="submit"]:hover {
+    background-color: #45a049;
+}
+
+/* Responsive design for the search section */
+@media (max-width: 768px) {
+    .search-section form {
+        justify-content: center;
+    }
+
+    .search-section select, .search-section input {
+        width: 100%;
+    }
+}
+
+.content {
+    padding: 20px;
+}
+
+.train-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+}
+
+.train-table th, .train-table td {
+    border: 1px solid white;
+    padding: 10px;
+    text-align: center;
+}
+
+.train-table th {
+    background-color: #4CAF50;
+    color: white;
+}
+
+.train-table td {
+    background-color: #222;
+}
+
+.train-table td select {
+    background-color: black;
+    color: white;
+    border: 1px solid #4CAF50;
+    padding: 5px;
+    border-radius: 3px;
+    cursor: pointer;
+}
+
+.train-table td select:hover {
+    background-color: #333;
+}
+
+button[type="submit"] {
+    margin-top: 20px;
+    padding: 10px 20px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+button[type="submit"]:hover {
+    background-color: #45a049;
+}
+
+/* Seat hover styles */
+.train-table td:hover {
+    background-color: #444;
+    cursor: pointer;
+}
+
+.seat:hover {
+    background-color: #555;
+}
+
+@media (max-width: 768px) {
+    .nav-links {
+        display: none;
+    }
+    .hamburger {
+        display: flex;
+    }
+}

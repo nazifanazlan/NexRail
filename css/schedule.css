@@ -1,0 +1,117 @@
+/*css for schedule.php file*/
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+.title {
+    text-align: center;
+    margin: 20px 0;
+}
+.train-box {
+    position: relative;
+    height: 400px;
+    margin-bottom: 20px;
+    background-size: cover;
+    background-attachment: fixed;
+    background-position: center;
+    border-radius: 10px;
+    overflow: hidden;
+    filter: brightness(1.2); /* Increase brightness */
+}
+.train-box::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.3); /* Less opaque overlay */
+}
+.train-box h2, .train-box p, .train-box button {
+    position: relative;
+    z-index: 1;
+}
+.train-box h2 {
+    position: absolute;
+    bottom: 80px; /* Adjusted to be above the description */
+    left: 20px;
+    margin: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    padding: 10px;
+    border-radius: 5px;
+}
+.train-box p {
+    position: absolute;
+    bottom: 20px; /* Adjusted to be above the button */
+    left: 20px;
+    margin: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    padding: 10px;
+    border-radius: 5px;
+    max-width: 70%; /* Reduced width to avoid overlap */
+}
+.train-box button {
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+.train-box button:hover {
+    background-color: #45a049;
+}
+
+/*css for xxx_schedule.php files*/
+.back-button {
+    display: block;
+    margin: 20px 0;
+    padding: 10px 20px;
+    background-color: #4CAF50;
+    color: white;
+    text-align: center;
+    text-decoration: none;
+    border-radius: 5px;
+    width: fit-content;
+}
+.back-button:hover {
+    background-color: #45a049;
+}
+.schedule-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 40px;
+}
+.schedule-table th, .schedule-table td {
+    border: 1px solid white;
+    padding: 10px;
+    text-align: center;
+}
+.schedule-table th {
+    background-color: #333;
+}
+.schedule-table td {
+    background-color: #444;
+}
+.show-more, .show-less {
+    display: block;
+    margin: 10px auto;
+    padding: 10px 20px;
+    background-color: #4CAF50;
+    color: white;
+    text-align: center;
+    text-decoration: none;
+    border-radius: 5px;
+    width: fit-content;
+    cursor: pointer;
+}
+.show-more:hover, .show-less:hover {
+    background-color: #45a049;
+}
+.hidden-row {
+    display: none;
+}

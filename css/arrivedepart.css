@@ -1,0 +1,165 @@
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-color: black;
+    color: white;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    border-bottom: 1px solid white;
+}
+
+.header .brand {
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.nav-links {
+    display: flex;
+    justify-content: flex-end;
+    flex-grow: 1;
+}
+
+.nav-links a, .nav-links span, .dropdown a, .dropdown span {
+    margin: 0 10px;
+    text-decoration: none;
+    color: white;
+    font-weight: bold;
+    padding: 10px 15px;
+    border-radius: 5px;
+    position: relative;
+    z-index: 1;
+    white-space: nowrap; /* Prevent text wrapping */
+}
+
+.nav-links a:hover, .dropdown a:hover {
+    background-color: rgba(255, 255, 255, 0.2); /* Faded background on hover */
+}
+
+.nav-links .current-page, .dropdown .current-page {
+    color: #4CAF50;
+    cursor: default;
+}
+
+.hamburger {
+    display: none;
+    flex-direction: column;
+    cursor: pointer;
+}
+
+.hamburger div {
+    width: 25px;
+    height: 3px;
+    background-color: white;
+    margin: 4px 0;
+}
+
+.dropdown {
+    display: none;
+    flex-direction: column;
+    position: absolute;
+    top: 60px;
+    right: 20px;
+    background-color: black;
+    border: 1px solid white;
+    border-radius: 5px;
+    z-index: 2;
+}
+
+.footer {
+    text-align: center;
+    padding: 10px 0;
+    background-color: #333;
+    color: white;
+    margin-top: 20px;
+}
+
+.content {
+    padding: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.search-section {
+    background-color: #222;
+    padding: 20px;
+    border-radius: 5px;
+    margin-bottom: 20px;
+}
+
+.search-section form {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    align-items: center;
+}
+
+.search-section label {
+    margin-right: 10px;
+    font-weight: bold;
+}
+
+.search-section input, .search-section select, .search-section button {
+    padding: 10px;
+    border: 1px solid white;
+    border-radius: 5px;
+    background-color: #333;
+    color: white;
+    font-size: 16px;
+}
+
+.search-section button {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+.search-section button:hover {
+    background-color: #45a049;
+}
+
+.train-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+
+.train-table th, .train-table td {
+    border: 1px solid white;
+    padding: 10px;
+    text-align: left;
+}
+
+.train-table th {
+    background-color: #444;
+    color: white;
+}
+
+.train-table tbody tr:nth-child(even) {
+    background-color: #333;
+}
+
+.train-table tbody tr:hover {
+    background-color: #555;
+}
+
+.tracker-section {
+    background-color: #222;
+    padding: 20px;
+    border-radius: 5px;
+    margin-bottom: 20px;
+}
+
+.tracker-section h2 {
+    margin-bottom: 10px;
+    color: #4CAF50;
+}
+
+.tracker-section p {
+    margin: 0;
+}
