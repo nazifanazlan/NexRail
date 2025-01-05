@@ -25,9 +25,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $password = trim($_POST['password']);
     $confirmPassword = trim($_POST['confirm-password']);
 
+    // Password policy check
+    $passwordPolicy = "/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/";
+
     // Check if passwords match
     if ($password !== $confirmPassword) {
         $error = "Passwords do not match.";
+    } elseif (!preg_match($passwordPolicy, $password)) {
+        $error = "Password must be at least 8 characters long, contain at least one uppercase letter, one lowercase letter, one number, and one special character (@$!%*?&).";
     } else {
         // Check if email already exists
         $stmt = $conn->prepare("SELECT userId FROM User WHERE email = ?");
