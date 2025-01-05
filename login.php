@@ -12,47 +12,75 @@ if ($conn->connect_error) {
     die("Database connection failed: " . $conn->connect_error);
 }
 
-// Process login form
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $email = trim($_POST['email']);
-    $password = trim($_POST['password']);
-    $captchaResponse = $_POST['g-recaptcha-response'];
+// Initialize session variables for failed attempts and lock time
+if (!isset($_SESSION['failed_attempts'])) {
+    $_SESSION['failed_attempts'] = 0;
+}
+if (!isset($_SESSION['lock_time'])) {
+    $_SESSION['lock_time'] = 0;
+}
 
-    // Verify CAPTCHA
-    $secretKey = "6LfTjJwqAAAAABPC1N6E3SG3rH_bjeT7MpCL7iG6"; 
-    $verifyResponse = file_get_contents("https://www.google.com/recaptcha/api/siteverify?secret={$secretKey}&response={$captchaResponse}");
-    $responseData = json_decode($verifyResponse);
+// Limit login attempts (max 3 attempts)
+if ($_SESSION['failed_attempts'] >= 3 && time() - $_SESSION['lock_time'] < 300) { // Lockout for 5 minutes
+    $error = "Too many failed login attempts. Please try again in 5 minutes.";
+} else {
+    // Process login form
+    if ($_SERVER["REQUEST_METHOD"] == "POST") {
+        $email = trim($_POST['email']);
+        $password = trim($_POST['password']);
+        $captchaResponse = $_POST['g-recaptcha-response'];
 
-    if (!$responseData->success) {
-        $error = "CAPTCHA verification failed. Please try again.";
-    } else {
-        // Check if email exists
-        $stmt = $conn->prepare("SELECT userId, password, is_verified FROM User WHERE email = ?");
-        $stmt->bind_param("s", $email);
-        $stmt->execute();
-        $stmt->store_result();
+        // Verify CAPTCHA
+        $secretKey = "6LfTjJwqAAAAABPC1N6E3SG3rH_bjeT7MpCL7iG6"; 
+        $verifyResponse = file_get_contents("https://www.google.com/recaptcha/api/siteverify?secret={$secretKey}&response={$captchaResponse}");
+        $responseData = json_decode($verifyResponse);
 
-        if ($stmt->num_rows > 0) {
-            $stmt->bind_result($userId, $hashedPassword, $isVerified);
-            $stmt->fetch();
-
-            if (!$isVerified) {
-                $error = "Please verify your email before logging in.";
-            } elseif (password_verify($password, $hashedPassword)) {
-                // Success - Start session
-                $_SESSION['user_id'] = $userId;
-                $_SESSION['email'] = $email;
-                header("Location: index.php");
-                exit();
-            } else {
-                $error = "Invalid email or password.";
-            }
+        if (!$responseData->success) {
+            $error = "CAPTCHA verification failed. Please try again.";
         } else {
-            $error = "No account found with this email.";
+            // Check if email exists
+            $stmt = $conn->prepare("SELECT userId, password, is_verified, failed_attempts FROM User WHERE email = ?");
+            $stmt->bind_param("s", $email);
+            $stmt->execute();
+            $stmt->store_result();
+
+            if ($stmt->num_rows > 0) {
+                $stmt->bind_result($userId, $hashedPassword, $isVerified, $failedAttempts);
+                $stmt->fetch();
+
+                if (!$isVerified) {
+                    $error = "Please verify your email before logging in.";
+                } elseif ($failedAttempts >= 3) {
+                    $error = "Account locked due to multiple failed attempts. Please try again later.";
+                } elseif (password_verify($password, $hashedPassword)) {
+                    // Reset failed attempts on successful login
+                    $stmt = $conn->prepare("UPDATE User SET failed_attempts = 0 WHERE email = ?");
+                    $stmt->bind_param("s", $email);
+                    $stmt->execute();
+
+                    // Success - Start session
+                    session_regenerate_id(); // Prevent session fixation attacks
+                    $_SESSION['user_id'] = $userId;
+                    $_SESSION['email'] = $email;
+                    header("Location: index.php");
+                    exit();
+                } else {
+                    // Increment failed attempts counter
+                    $stmt = $conn->prepare("UPDATE User SET failed_attempts = failed_attempts + 1 WHERE email = ?");
+                    $stmt->bind_param("s", $email);
+                    $stmt->execute();
+                    $_SESSION['failed_attempts']++;
+
+                    $error = "Invalid email or password.";
+                }
+            } else {
+                $error = "No account found with this email.";
+            }
+            $stmt->close();
         }
-        $stmt->close();
     }
 }
+
 $conn->close();
 ?>
 
@@ -65,9 +93,6 @@ $conn->close();
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/login.css">
     <script src="https://www.google.com/recaptcha/api.js" async defer></script>
-    <style>
-        
-    </style>
 </head>
 <body>
     <!-- Header Section -->
@@ -75,21 +100,6 @@ $conn->close();
         <div class="brand">NexRail</div>
         <div class="nav-links">
             <span class="current-page">Login</span>
-            <a href="register.php">Register</a>
-            <a href="schedule.php">Train Schedule</a>
-            <a href="notification.php">Notification</a>
-            <a href="arrival_depart.php">Arrival/Depart</a>
-            <a href="seat_selection.php">Seat Selection</a>
-            <a href="price.php">Pricing</a>
-            <a href="customersupport.php">Customer Support</a>
-        </div>
-        <div class="hamburger" onclick="toggleDropdown()">
-            <div></div>
-            <div></div>
-            <div></div>
-        </div>
-        <div class="dropdown" id="dropdown">
-            <a href="login.php">Login</a>
             <a href="register.php">Register</a>
             <a href="schedule.php">Train Schedule</a>
             <a href="notification.php">Notification</a>
@@ -153,6 +163,5 @@ $conn->close();
             return true;
         }
     </script>
-    <script src="javascript/script.js"></script>
 </body>
 </html>
